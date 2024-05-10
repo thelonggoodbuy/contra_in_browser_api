@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ninja',
+    'src.users_app',
 ]
 
 MIDDLEWARE = [
@@ -75,10 +77,18 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'poc_contra_in_browser_db',
+        'USER': 'maxim',
+        'PASSWORD': '12345qwert',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
+
+AUTH_USER_MODEL = 'users_app.CustomUser'
 
 
 # Password validation
