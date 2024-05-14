@@ -16,6 +16,11 @@ python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 django-ninja-jwt = "^5.3.1"
 djangorestframework-simplejwt = "^5.3.1"
 drf-yasg = "^1.21.7"
+python-socketio = "^5.11.2"
+eventlet = "^0.36.1"
+daphne = "^4.1.2"
+gunicorn = "^22.0.0"
+uvicorn = "^0.29.0"
 
 
 [build-system]

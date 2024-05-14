@@ -65,3 +65,7 @@ def login_request(request, form_data: Form[LoginRequestForm]) -> Token:
         )
     access_token = encode_jwt(user.id)
     return Token(access_token=access_token, token_type="bearer")
+
+
+
+

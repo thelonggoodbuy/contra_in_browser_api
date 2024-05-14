@@ -143,3 +143,7 @@ GitHub.sublime-settings
 .history
 
 pip_logs.py
+
+
+# local test data
+local_testdata/*

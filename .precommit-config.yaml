@@ -8,7 +8,7 @@ pyupgrade
 
 reorder-python-imports
 
-yesda
+# yesda
 
 flake8
 flake8-annotations
