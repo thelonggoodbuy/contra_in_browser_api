@@ -5,7 +5,7 @@ from src.api.api import api
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('src.users_app.urls')), 
+    # path('', include('src.users_app.urls')), 
     # path('socket_io/', socket_io_server),
     path('api/', api.urls),
     

@@ -12,17 +12,22 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=&m@3=tkj77@rdo!c-%0)8f8a3!)l8-b5a!$#zc4yxw#!kq-k*'
+# SECRET_KEY = 'django-insecure-=&m@3=tkj77@rdo!c-%0)8f8a3!)l8-b5a!$#zc4yxw#!kq-k*'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -80,14 +85,18 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'poc_contra_in_browser_db',
-        'USER': 'maxim',
-        'PASSWORD': '12345qwert',
-        'HOST': 'localhost',
-        'PORT': '',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'poc_contra_in_browser_db',
+        # 'USER': 'maxim',
+        # 'PASSWORD': '12345qwert',
+        # 'HOST': 'localhost',
+        # 'PORT': '',
+        'ENGINE': os.getenv('ENGINE'),
+        'NAME': os.getenv('NAME'),
+        'USER': os.getenv('USER'),
+        'PASSWORD': os.getenv('PASSWORD'),
+        'HOST': os.getenv('HOST'),
+        'PORT': os.getenv('PORT'),
     }
 }
 
@@ -144,10 +153,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "ws://localhost:8000",  # Add WebSocket origin
-    "ws://127.0.0.1:8000",   # Add WebSocket origin
-    # Add other allowed origins as needed
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8000",
+#     "http://127.0.0.1:8000",
+#     "ws://localhost:8000",  # Add WebSocket origin
+#     "ws://127.0.0.1:8000",   # Add WebSocket origin
+#     # Add other allowed origins as needed
+# ]
