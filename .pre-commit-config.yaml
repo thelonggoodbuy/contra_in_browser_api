@@ -1,0 +1,30 @@
+repos:
+  - repo: https://github.com/thelonggoodbuy/contra_in_browser_api
+    rev: v3.4.0
+    hooks:
+      - id: autoflake
+      - id: black
+      - id: pyupgrade
+      - id: reorder-python-imports
+      - id: yesda
+      - id: flake8
+      - id: flake8-annotations
+      - id: flake8-annotations-coverage
+      - id: flake8-bandit
+      - id: flake8-broken-line
+      - id: flake8-bugbear
+      - id: flake8-builtins
+      - id: flake8-commas
+      - id: flake8-comprehensions
+      - id: flake8-debugger
+      - id: flake8-eradicate
+      - id: flake8-executable
+      - id: flake8-fixme
+      - id: flake8-future-import
+      - id: flake8-pyi
+      - id: flake8-pytest
+      - id: flake8-pytest-style
+      - id: flake8-mutable
+      - id: flake8-string-format
+      - id: flake8-todo
+      - id: flake8-unused-arguments
