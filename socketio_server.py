@@ -77,9 +77,16 @@ class GameNamespace(socketio.AsyncNamespace):
         Returns:
             None
         """
+        
+        # print('----join--room---data----')
+        # print(data)
+        # print(type(data))
+        # print('-------------------------')
+
         dictionary = json.loads(data)
+        
         await self.enter_room(sid, dictionary['room_token'])
-        await self.emit('test_message_for_certain_room', data=data,\
+        await self.emit('test_message_for_certain_room', data='users joined the room!',\
                                                 room=dictionary['room_token'], \
                                                 namespace='/game')
     
