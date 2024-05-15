@@ -15,6 +15,7 @@ from src.users_app.services.users_service import UserService
 
 
 socket_io_server = socketio.AsyncServer(async_mode='asgi', cors_allowed_origins="*")
+# TODO logger
 app = socketio.ASGIApp(socket_io_server)
 
 
