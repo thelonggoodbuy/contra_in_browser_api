@@ -6,7 +6,7 @@ services:
     build: 
       context: ./nginx
     volumes:
-      - /home/demodev/web/shooter.demodev.cc/public_html/public/static:/usr/src/app/staticfiles
+      - static_volume:/usr/src/app/staticfiles
     ports:
       - 3002:80
     depends_on:
@@ -18,7 +18,7 @@ services:
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./:/usr/src/app/
-      - /home/demodev/web/shooter.demodev.cc/public_html/public/static:/usr/src/app/staticfiles
+      - static_volume:/usr/src/app/staticfiles
     env_file:
       - ./.env
     depends_on:
