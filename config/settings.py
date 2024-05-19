@@ -19,7 +19,18 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-load_dotenv(os.path.join(BASE_DIR, '.env'))
+
+environment = os.getenv('DJANGO_ENV', 'local')
+
+if environment == 'local':
+    dotenv_file = '.env.local'
+else:
+    dotenv_file = '.env'
+
+
+
+load_dotenv(os.path.join(BASE_DIR, dotenv_file))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -33,7 +44,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLAUTH_HOSTS = os.getenv('ALLAUTH_HOSTS', '').split(',')
+ALLOWED_HOSTS = os.getenv('ALLAUTH_HOSTS', '').split(',')
+# ALLOWED_HOSTS = ['your_current_hosts', 'shooter.demodev.cc']
 
 # Application definition
 

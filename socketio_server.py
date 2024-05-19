@@ -25,8 +25,13 @@ class GameNamespace(socketio.AsyncNamespace):
     in the contra_in_browser game.
     """
 
+    # def __init__(self):
+    #     self.sid_user_dictionary = {}
+    sid_user_dictionary = {}
+    sid_rooms_dict = {}
 
-    async def on_connect(self, sid, environ, *data) -> None:
+
+    async def on_connect(self, sid, environ) -> None:
         """
         Connection event. Checks if user authentication data is valid
         and returns a token for creating a room.
@@ -41,12 +46,17 @@ class GameNamespace(socketio.AsyncNamespace):
         """
         result = await sync_to_async(UserService.check_if_token_is_correct)\
                                     (environ.get('HTTP_AUTHORIZATION'))
+        if result.user_id: 
+            self.sid_user_dictionary[sid] = result.user_id
+        print('***')
+        print(self.sid_user_dictionary)
+        print('***')
         await self.emit('authentication_status', data=result.dict(),\
                                                 room=sid, \
                                                 namespace='/game')
-        
 
-    async def on_create_room(self, sid, data: dict) -> None:
+
+    async def on_create_room(self, sid, data=None) -> None:
         """
         Creating room command. Receives a token (obtained from the connection)
         and creates a room.
@@ -58,12 +68,26 @@ class GameNamespace(socketio.AsyncNamespace):
         Returns:
             None
         """
-        await self.enter_room(sid, data['room_token'])
-        await self.emit('connection_with_created_room', data=data,\
+        user_id = self.sid_user_dictionary[sid]
+        room_token = await sync_to_async(UserService.generate_enter_the_room_token)(user_id)
+        room_token_message = {'room_token': room_token}
+
+        await self.enter_room(sid, room_token)
+        self.sid_rooms_dict[sid] = room_token
+        await self.emit('connection_with_created_room', data=room_token_message,\
                                                 room=sid, \
                                                 namespace='/game')
 
         
+
+    async def on_send_message_to_game_partner(self, sid, data):
+        # print(data)
+        current_room = self.sid_rooms_dict[sid]
+        await self.emit('receive_message_from_room', data=data,
+                                                    room=current_room,
+                                                    skip_sid=sid,
+                                                    namespace='/game')
+
 
     async def on_join_room(self, sid, data: dict) -> None:
         """
@@ -78,16 +102,15 @@ class GameNamespace(socketio.AsyncNamespace):
         Returns:
             None
         """
-        
-        # print('----join--room---data----')
-        # print(data)
-        # print(type(data))
-        # print('-------------------------')
 
         dictionary = json.loads(data)
         
         await self.enter_room(sid, dictionary['room_token'])
-        await self.emit('test_message_for_certain_room', data='users joined the room!',\
+        test_message_dict = {'message': 'users joined the room!'}
+
+        self.sid_rooms_dict[sid] = dictionary['room_token']
+        
+        await self.emit('test_message_for_certain_room', data=test_message_dict,\
                                                 room=dictionary['room_token'], \
                                                 namespace='/game')
     

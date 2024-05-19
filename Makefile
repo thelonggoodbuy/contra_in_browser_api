@@ -1,5 +1,6 @@
 run-api-server:
 	clear
+	export DJANGO_ENV=local
 	python3 manage.py runserver
 
 run-socket-server:

@@ -4,6 +4,7 @@ from .dependencies import authenticate_user, encode_jwt
 from .schemas import Token, LoginRequestForm, ScoreUpdateSchema
 from .utils.jwt_auth_requied_decorator import jwt_auth_required
 from src.users_app.services.users_service import UserService
+import json
 
 
 
@@ -26,7 +27,9 @@ def get_user_total_score(request) -> int:
     """
 
     total_score = UserService.return_score_by_id(request.user.id)
-    return total_score
+
+    return_dict = {'user_email': request.user.email, 'total_score': total_score}
+    return return_dict
 
 
 @api.post("/post_change_user_total_score")
@@ -43,7 +46,9 @@ def change_user_total_score(request, data: ScoreUpdateSchema) -> int:
     """
     updated_score_int = data.value
     new_total_score = UserService.update_score_by_id(request.user.id, updated_score_int)
-    return new_total_score
+
+    return_dict = {'user_email': request.user.email, 'total_score': new_total_score, 'changes_in_score': data.value}
+    return return_dict
 
 
 
